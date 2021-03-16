@@ -1,4 +1,4 @@
-# 2 Création des composants
+# 2 Création des composants statiques
 
 - Dans cette étapes nous allons créer les composant que nous avons besoin dans notre projet
 
