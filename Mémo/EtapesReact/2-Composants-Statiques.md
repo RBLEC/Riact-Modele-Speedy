@@ -299,6 +299,7 @@ Soit dans notre fichier  `src/components/MonDossierApp/index.js` au final
 // // == Export
 // export default MonDossierApp;
 ```
+
 ---
 
 Dans ce model de React les parties ci-dessus sont déjà faite.
