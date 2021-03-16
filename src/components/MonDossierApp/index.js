@@ -8,6 +8,7 @@ import Articles from 'src/components/Articles'
 import Aside from 'src/components/Aside'
 import Section from 'src/components/Section'
 import Footer from 'src/components/Footer'
+import List from 'src/components/List'
 
 // == Import
 import reactLogo from './react-logo.svg';
@@ -26,6 +27,7 @@ const MonDossierApp = () => (
     < Aside />
     < Section />
     < Footer />
+    < List />
   </div>
 );
 
