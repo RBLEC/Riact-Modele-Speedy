@@ -325,4 +325,243 @@ React.createElement(Ingredient, {...data})
 
 # En cas de problème
 
+
+
 Pour augmenter le nombre de "watcher" pour yarn : `echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p`
+
+# Statefull Components
+
+## State
+
+Le state ou état de l'application ou source de vérité (single source of truth en anglais). Il va nous permettre de stocker des données internes à l'application **qui vont varier dans le temps**.
+## setState
+
+`setState()` planifie des modifications à l’état local du composant, et indique à React que ce composant et ses enfants ont besoin d’être rafraîchis une fois l’état mis à jour.
+
+`setState()` ne met pas toujours immédiatement le composant à jour. Il peut regrouper les mises à jour voire les différer.  
+
+**:warning: En conséquence, lire la valeur de this.state juste après avoir appelé setState() est une mauvaise idée.**
+
+`setState()` s'apelle en passant un objet comme premier argument. Il représente le changement qui doit se produire
+Son deuxième argument est une fonction de callback qui sera exécutée une fois le changement effectué
+
+```js
+setState(stateChange[, callback])
+```
+
+Par exemple :
+
+```js
+// ...
+// Etat initial
+this.state = {
+  name: 'Un produit',
+  price: 12,
+  quantity: 1
+}
+// ...
+// Changement d'état ( suite à un clic sur un bouton par exemple )
+this.setState({
+  quantity: 4
+});
+
+```
+
+Va provoquer un changement d'état et donc provoque aussi un re-render qui lui même exécuter une nouvelle fois la fonction render.
+
+Suite à cette modification au moment du render le state vaudra donc : 
+
+```js
+this.state = {
+  name: 'Un produit',
+  price: 12,
+  quantity: 4
+}
+```
+
+### Mise en place
+
+Pour mettre en place le `state`, il faut convertir la fonction en classe et étendre de `React.Component`
+
+```js
+class Converter extends React.Component {...
+```
+
+#### Version legacy
+
+Le state est instancié dans le `constructor` avec l'ancienne méthode. C'est un objet qui est une propriété de la classe.
+
+```js
+constructor(props) {
+  super(props);
+  
+  this.state = {
+    open: false
+  }
+}
+```
+
+#### Version moderne
+
+Grâce au plugin `@babel/plugin-proposal-class-properties` on peut déclarer les propriétés de classe directement à la racine de celles-ci, sans passer par le `constructor`.
+
+```js
+// à la racine de la classe
+state = {
+  open: false,
+}
+```
+
+#### Phase de rendu : render
+
+En passant par une classe il faut changer la façon de rendre le JSX. La méthode `render` est là pour ça. Il faut donc penser à placer le JSX retourné dans la méthode `render` de la classe.
+
+```js
+class Converter extends React.Component {
+  ...
+  render() {
+    return (
+      <div>JSX à retourner</div>
+    );
+  }
+}
+```
+### Utilisation du state
+
+Le state est un objet, on peut récupérer ses données via l'écriture pointée comme n'importe quel objet JS. Il faut juste penser à rajouter `this` devant car c'est une propriété de la classe.
+
+```js
+this.state.open
+```
+
+### Changement de state : setState
+
+Pour modifier le state, on passe par la fonction `setState`. Cela permet à React de savoir qu'un changement de donnée a eu lieu et une fois que le state est à jour, **React procède à un nouveau rendu** : il réexécute la fonction `render`
+
+Pour utiliser `setState` on passe en argument un objet avec la ou les propriétés qu'on souhaite changer.
+
+```js
+this.setState({
+  open: !open,
+});
+```
+
+> **Attention** : il ne faut jamais modifier le state directement `this.state.open = false` React ne fait pas de rendu dans ce cas de figure
+
+## Composant contrôlé
+
+[Lien de la doc officielle](https://fr.reactjs.org/docs/forms.html#controlled-components)
+
+## Comment gérer un click sur un sous-composant et changer le state du root component
+
+Dans un premier temps on test le onClick sur l'élément directement avec `alert` par exemple.  
+Prenons pour exemple le clic sur une currency.  
+On va dans le composant concerné `<Currency>` et on créé une propriété `onClick` sur l'élément **natif** `<li>`
+
+**:warning: La propriété onClick ne fonctionne de facon native QUE sur des composants natifs comme `div`, `a`, `li`, `button`, etc ...**
+
+Si on créé une propriété **qu'elle qu'elle soit** sur un composant custom, **il va falloir** l'interpréter par vous même
+
+Si on clic sur une currency, en fait on clic sur le `li`, et on peut constater que le `li` fait bien son travail, car l'alert s'affiche.
+
+Le soucis, c'est qu'on veut pouvoir interragir avec le root component. Il faut donc remonter jusqu'à lui.  
+On va donc passer par tous les intermédiaires.
+
+Le parent direct de `<Currency>` c'est `<Currencies>`, il faut donc que `<Currencies>` donne à `<Currency>` un propriété au Clic, un `onClick`. 
+
+Ce `onClick` sera donc une propriété custom d'un composant custom. Il va donc falloir trouver un moyen de la déclencher. Ce sera le travail du `<li>` natif de `<Currency>`
+
+Maintenant la logique au clic est passée de `<Currencies>` à `<Currency>`. Il faut réitérer l'opération autant de fois qu'il y a d'intermédiaire entre le root component et le composant qui déclenche le clic
+
+Ici, il faut le faire encore une dernière fois. C'est `<Converter>` qui doit avoir la fonction à déclencher au click, il doit donc la donner à `<Currencies>` qui lui la donne à `<Currency>` qui lui la donne au `<li>` qui lui la déclenche au clic.
+
+J'ai pu remonter le click jusqu'a la définition dans `<Converter>`, je peux donc avoir accès au `this.setState`, il ne me manque plus qu'a changer l'état du composant `<Converter>`
+
+## Transmettre des paramètres au click jusqu'au root component
+
+L'idée ici c'est de donner les paramètres qui correspondent au click, au moment où on les as, sous la forme la plus proche voulue.
+
+Ici on veut pouvoir au clic transmettre la currency sur laquelle on a cliqué. Pour ça il nous la currency.  
+
+Mais où a-t-on accès à cette currency dans tout sa forme ? Dans le composant `<Currencies>` au moment ou on créé les `<Currency>`
+
+A ce moment là on passe la propriété `onClick` à `<Currency>` on va dont l'intercepter et rajouter un intermédiaire ( une fonction anonyme ).
+
+```js
+<Currency
+  key={currency.name}
+  {...currency}
+  onClick={() => {
+    onCurrencyClick(currency);
+  }}
+/>
+```
+
+La fonction anonyme dans le `onClick`, va permettre de récuper la main, et d'appliquer des paramètres à la fonction représentée par la props `onCurrencyClick`. C'est en fait les prémisse du `hosting`.
+
+
+# [Le LifeCycle](https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
+
+
+## Montage du composant
+
+### Le constructeur
+
+Avant même le montage du composant, on passe dans le `constructor`, c'est une fonction qui va permettre d'instancier le composant lui même.
+
+**Si vous n’initialisez pas d’état local ( un state ), vous n’avez pas besoin d’implémenter votre propre constructeur pour votre composant React.**
+
+Cependant ESLint vous insulte copieusement, si vous ne le faite pas. Donc on le fait quand même ( dans un composant classe forcément )
+
+Pour résumer un `constructor` est la pour initialiser un composant avec son état initial. Il se sert pas à faire de requetes ou quoi que ce soit d'autre. Et c'est la **première** fonction a être éxécutée dans un composant.
+
+### Le render au montage
+
+C'est la fonction qu'on utilise depuis le début, cette fonction nous permet d'afficher un visuel pour le composant.
+
+On ne DOIT PAS changer d'état ( de faire de `setState`) dans cette fonction ( sauf si on le fait dans un callback plus tard ). Sinon on risque de faire __une boucle infini__ de `render`.
+
+Avant la méthode `render` on a la vu avant la mise à jour du state.  Pendant la méthode `render` on est en train de mettre à jour, donc on ne visualise pas encore les modifications.  
+La mise à jour du `DOM` est donc effective **qu'après** la méthode render. Ce qui est évident puisque elle **retourne** du `jsx`
+
+### Le componentDidMount
+
+De la même facon que `render`, nous ne l'appelons pas explicitement, c'est react qui s'en occupe pour nous.
+Sauf que cette méthode, est là pour dire que le composant __vient__ de se monter et qu'il a fini de faire le __rendu__.
+
+Cette methode va servir à aller faire des initialisation, comme le constructor, mais pas sur le state, plutot sur de la donnée **asynchrone**,  par exemple, on va aller cherche une liste de monnaie en base de donnée. On a besoin de le faire qu'une seule fois, et on a besoin de le faire au chargement du composant. Donc `componentDidMount`
+Elle sert aussi à lancer des écouteurs d'évènements. Par exemple un `eventListener` sur un scroll d'une div d'un composant.
+Ce qu'on ne pourrait pas faire dans le `constructor` car le dom du composant n'existe pas encore
+
+## La mise à jour du composant
+
+### Le render à la mise à jour
+
+Un composant une fois monté est en attente de changement. Comment provoquer un changement ?
+
+Il y a 3 solutions : 
+
+- `newProps`, Si on change les props d'un composant, ça va provoquer un `render` de ce composant, c'est à dire ajout/suppression/modification d'une ou plusieurs prop(s) existante(s)
+- `setState`, un changement d'état par déclenchement de la fonction `setState` va obligatoirement et de facon **asynchrone** provoquer un `render`
+- `forceUpdate`, l'utilisation de la fonction `forceUpdate` a pour but de déclancher un nouveau `render`. Cette fonction on ve va jamais l'utiliser, on peut toujours faire sans.
+
+Une fois le `render` effectué, de la même facon qu'au montage. Il va cette fois ci se passer quelque chose de supplémentaire.
+
+### Le componentDidUpdate
+
+Cette fonction va se passer juste après chaque `render`. Elle sert à vérifier si on doit faire des traitements aprés. Elle admet 3 arguments, dont seulement 2 nous intéressent.
+
+- `prevProps`, qui représente les props **avant** le render qui vient de se passer
+- `prevState`, qui représente le state **avant** le render qui vient de se passer
+
+Ce qui nous permet donc de pouvoir __comparer__ l'état précédent avec l'état en cours ( props et/ou state ).
+
+## Le démontage
+
+Un composant se démonte quand il va ne plus faire partit du DOM. C'est à dire quand il n'est plus rendu. C'est au dela de le cacher en CSS, il n'est réellement plus là.
+
+### Le componentWillUnmount
+
+Cette fonction va se déclencher **juste avant** le démontage effectif du composant. Parce que elle ne peut pas se déclencher sur un composant qui n'existe plus ( voila pourquoi __juste avant__)
+
+Ici on est plutot dans une optique de **nettoyage de l'interface**. Si précédement on avait par exemple créé un eventListener sur le scroll d'une div, cet event listener est toujours appliqué. Il faut le supprimer cet evenListener. Cette fonction `componentWillUnmount` est là pour ça. On va utiliser un `removeEventListener`
