@@ -1,6 +1,5 @@
-# Recap
 
-## Point d'entrée
+# Point d'entrée
 
 Fichier où l'on va injecter notre composant racine dans le DOM.
 
