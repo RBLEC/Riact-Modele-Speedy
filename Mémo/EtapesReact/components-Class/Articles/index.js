@@ -5,13 +5,11 @@ import React from 'react';
 import './styles.scss';
 
 // == Composant
-function Articles () {
+const Articles = () => (
+  <div className="articles">
+    <h1>Composant : Articles</h1>
+  </div>
+);
 
-  return (
-    <div className="articles">
-      <h1>Composant : Articles</h1>
-    </div>
-  );
-}
 // == Export
 export default Articles;

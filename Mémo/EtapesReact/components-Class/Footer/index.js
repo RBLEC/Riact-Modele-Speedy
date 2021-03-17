@@ -5,14 +5,11 @@ import React from 'react';
 import './styles.scss';
 
 // == Composant
-function Footer() {
-
-  return (
-    <div className="footer">
-      <h1>Composant : Footer</h1>
-    </div>
-  );
-}
+const Footer = () => (
+  <div className="footer">
+    <h1>Composant : Footer</h1>
+  </div>
+);
 
 // == Export
 export default Footer;

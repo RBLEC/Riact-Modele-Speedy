@@ -5,13 +5,11 @@ import React from 'react';
 import './styles.scss';
 
 // == Composant
-function Header() {
+const Header = () => (
+  <div className="header">
+    <h1>Composant : Header</h1>
+  </div>
+);
 
-  return (
-    <div className="header">
-      <h1>Composant : Header</h1>
-    </div>
-  );
-}
 // == Export
 export default Header;

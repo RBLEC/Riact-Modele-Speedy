@@ -5,14 +5,11 @@ import React from 'react';
 import './styles.scss';
 
 // == Composant
-function Aside() {
-
-  return (
-    <div className="aside">
-      <h1>Composant : Aside</h1>
-    </div>
-  );
-}
+const Aside = () => (
+  <div className="aside">
+    <h1>Composant : Aside</h1>
+  </div>
+);
 
 // == Export
 export default Aside;

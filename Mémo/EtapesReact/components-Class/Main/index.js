@@ -5,14 +5,11 @@ import React from 'react';
 import './styles.scss';
 
 // == Composant
-function Main() {
-
-  return (
-    <div className="main">
-      <h1>Composant : Main</h1>
-    </div>
-  );
-}
+const Main = () => (
+  <div className="main">
+    <h1>Composant : Main</h1>
+  </div>
+);
 
 // == Export
 export default Main;

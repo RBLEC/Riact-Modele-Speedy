@@ -5,14 +5,11 @@ import React from 'react';
 import './styles.scss';
 
 // == Composant
-function Nav() {
-
-  return (
-    <div className="nav">
-      <h1>Composant : Nav</h1>
-    </div>
-  );
-}
+const Nav = () => (
+  <div className="nav">
+    <h1>Composant : Nav</h1>
+  </div>
+);
 
 // == Export
 export default Nav;

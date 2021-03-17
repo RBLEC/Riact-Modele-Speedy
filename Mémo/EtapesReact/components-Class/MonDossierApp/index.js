@@ -15,23 +15,21 @@ import reactLogo from './react-logo.svg';
 import './styles.scss';
 
 // == Composant
-function MonDossierApp () {
+const MonDossierApp = () => (
+  <div className="mondossierapp">
+    <img src={reactLogo} alt="react logo" />
+    <h1>Composant : Mon Dossier App</h1>
+    < MonCompoSecondaire />
+    < Header />
+    < Nav />
+    < Main />
+    < Articles />
+    < Aside />
+    < Section />
+    < Footer />
+    < List />
+  </div>
+);
 
-  return (
-    <div className="mondossierapp">
-      <img src={reactLogo} alt="react logo" />
-      <h1>Composant : Mon Dossier App</h1>
-      < MonCompoSecondaire />
-      < Header />
-      < Nav />
-      < Main />
-      < Articles />
-      < Aside />
-      < Section />
-      < Footer />
-      < List />
-    </div>
-  );
-}
 // == Export
 export default MonDossierApp;

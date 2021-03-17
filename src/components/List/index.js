@@ -5,23 +5,26 @@ import React from 'react';
 import './styles.scss';
 
 // == Composant
-const List = () => (
-  <div className="list">
-    <h1>Composant : List</h1>
-    <p>Création d'une liste</p>
-    <div>
-      <header>Header</header>
-      <ul>
-        <li>Liste 1</li>
-      </ul>
-      <ul>
-        <li>
-          Liste 2
-        </li>
-      </ul>
+function List() {
+  
+  return (
+    <div className="list">
+      <h1>Composant : List</h1>
+      <p>Création d'une liste</p>
+      <div>
+        <header>Header</header>
+        <ul>
+          <li>Liste 1</li>
+        </ul>
+        <ul>
+          <li>
+            Liste 2
+          </li>
+        </ul>
+      </div>
     </div>
-  </div>
-);
+  );
+}
 
 // == Export
 export default List;

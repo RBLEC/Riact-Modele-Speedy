@@ -5,14 +5,11 @@ import React from 'react';
 import './styles.scss';
 
 // == Composant
-function Section() {
-
-  return (
-    <div className="section">
-      <h1>Composant : Section</h1>
-    </div>
-  );
-}
+const Section = () => (
+  <div className="section">
+    <h1>Composant : Section</h1>
+  </div>
+);
 
 // == Export
 export default Section;

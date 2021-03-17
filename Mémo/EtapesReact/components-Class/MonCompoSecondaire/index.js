@@ -5,13 +5,11 @@ import React from 'react';
 import './styles.scss';
 
 // == Composant
-function MonCompoSecondaire() {
-
-  return (
+const MonCompoSecondaire = () => (
   <div className="moncomposecondaire">
     <h1>Composant : Mon Compo Secondaire</h1>
   </div>
-  );
-}
+);
+
 // == Export
 export default MonCompoSecondaire;
