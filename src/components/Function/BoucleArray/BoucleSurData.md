@@ -128,9 +128,11 @@ export default Currencies;
 // export default Currencies;
 ```
 
+---
+
 ## Pour passer toute les informations d'un tableau a une const
 
-pour passer toute les donnée d'un trabeau 
+pour passer toute les donnée d'un trabeau
 
 ```js
 function Currencies({ currencies }) {
@@ -146,3 +148,277 @@ function Currencies({ currencies }) {
     <Currency key={currency.name} {...currency} />
   ));
 ```
+
+---
+## Autre exemple de boucle
+
+### 1 Le Parent
+
+- Avant intégration des props
+  
+```js
+  return (
+    <div className="blog">
+      <Header categories={categoriesData} />
+      <Posts />
+      <Footer />
+    </div>
+  );
+```
+
+- Intégration du props au parent
+
+```js
+//   return (
+//     <div className="blog">
+//       <Header categories={categoriesData} />
+    / passage du props a Post ( postData en json) /
+         <Posts posts={postsData} />
+//       <Footer />
+//     </div>
+//   );
+```
+
+#### 2 L'Enfants
+
+- avant intégration des props et du la boucle
+
+```js
+import React from 'react';
+import Post from './Post';
+import './style.scss';
+// BEM = Bloc Element Modifier
+function Posts() {
+  return (
+    <main className="posts">
+      <h1 className="posts__title">Dev of Thrones</h1>
+      <ul className="posts__list">
+
+     {/* Simulation de boucle */} 
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+        <Post />
+      </ul>
+    </main>
+  );
+}
+
+export default Posts;
+```
+
+- intégration des props de la boucle map
+
+```js
+// import React from 'react';
+  / importation des props /
+   import PropTypes from 'prop-types';
+// import Post from './Post';
+// import './style.scss';
+// // BEM = Bloc Element Modifier
+  / integration des props /
+   function Posts({ posts }) {
+     / construction de la boucle avec toutes les datas/
+     const postsList = posts.map((post) => <Post key={post.id} {...post} />);
+// 
+//   return (
+//     <main className="posts">
+//       <h1 className="posts__title">Dev of Thrones</h1>
+//       <ul className="posts__list">
+          / utilisation de ma boucle /
+           {postsList}
+//       </ul>
+//     </main>
+//   );
+// }
+// 
+  / Validation des props /
+   Posts.propTypes = {
+     posts: PropTypes.arrayOf(PropTypes.shape({
+       id: PropTypes.number.isRequired,
+     })).isRequired,
+   };
+// 
+// export default Posts;
+```
+
+### 3 Sous-Enfant
+
+- avant l'import des props
+
+```js
+import React from 'react';
+
+function Post() {
+  return (
+    <li className="post">
+      <article>
+        <h2 className="post__title">Titre du post</h2>
+        <div className="post__category">Category</div>
+        <p className="post__content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta praesentium, accusamus cupiditate culpa qui similique delectus deserunt voluptatem molestiae, eligendi voluptas eveniet error explicabo odit quibusdam tenetur sequi facilis dignissimos.</p>
+      </article>
+    </li>
+  );
+}
+
+export default Post;
+```
+
+- Rendu final avec dynamisation
+
+```js
+// import React from 'react';
+  / import des props /
+   import PropTypes from 'prop-types';
+// 
+  / intégration selectionner des props /
+   function Post({ title, category, excerpt }) {
+//   return (
+//     <li className="post">
+//       <article>
+         / utilisation des props selectionner /
+           <h2 className="post__title">{title}</h2>
+           <div className="post__category">{category}</div>
+           <p className="post__content">{excerpt}</p>
+//       </article>
+//     </li>
+//   );
+// }
+// 
+  / Calidation des props /
+   Post.propTypes = {
+     title: PropTypes.string.isRequired,
+     category: PropTypes.string.isRequired,
+     excerpt: PropTypes.string.isRequired,
+   };
+// 
+// export default Post;
+```
+
+---
+
+### Exemple de boucle Parent => Enfant
+
+#### 1 Parent
+
+- Avant import des props
+
+```js
+import Posts from 'src/components/Posts';
+import Footer from 'src/components/Footer';
+
+import './style.scss';
+
+function Blog() {
+  return (
+    <div className="blog">
+      <Header />
+      <Posts />
+      <Footer />
+    </div>
+```
+
+- Rendu avec intégration des props dans le parent
+
+```js
+// import Posts from 'src/components/Posts';
+// import Footer from 'src/components/Footer';
+// 
+  / importation de la data /
+   import categoriesData from 'src/data/categories';
+   import postsData from 'src/data/posts';
+// 
+// import './style.scss';
+// 
+// function Blog() {
+//   return (
+//     <div className="blog">
+      / passage des props /
+         <Header categories={categoriesData} />
+//       <Posts />
+//       <Footer />
+//     </div>
+
+```
+
+#### 2 L'Enfant
+
+- Avant import des props chez l'enfant
+
+```js
+import React from 'react';
+
+import './style.scss';
+
+function Header() {
+  return (
+    <header className="header">
+      <nav>
+        <ul>
+          <li><a href="/" className="header__link header__link--selected">Accueil</a></li>
+          <li><a href="/angular" className="header__link">Angular</a></li>
+          <li><a href="/react" className="header__link">React</a></li>
+          <li><a href="/oclock" className="header__link">O'clock</a></li>
+          <li><a href="/autres" className="header__link">Autres</a></li>
+        </ul>
+      </nav>
+    </header>
+  );
+}
+
+export default Header;
+```
+
+- Après l'importation, l'intégration, l'utilisation et validation des props
+
+```js
+// import React from 'react';
+  / importation des props /
+   import PropTypes from 'prop-types';
+// 
+// import './style.scss';
+// 
+  / integration des props /
+   function Header({ categories }) {
+
+     / création de la boucle /
+     const menu = categories.map((category) => (
+       <li key={category.route}>
+         <a href={category.route} className="header__link">
+           {category.label}
+         </a>
+       </li>
+     ));
+// 
+//   return (
+//     <header className="header">
+//       <nav>
+//         <ul>
+      / utilisation de la boucle /
+             {menu}
+//         </ul>
+//       </nav>
+//     </header>
+//   );
+// }
+// 
+  / Validation des props /
+   Header.propTypes = {
+     categories: PropTypes.arrayOf(
+       PropTypes.shape({
+         route: PropTypes.string.isRequired,
+         label: PropTypes.string.isRequired,
+       }),
+     ).isRequired,
+   };
+// 
+// export default Header;
+```
+
+---
+
+
+
+
