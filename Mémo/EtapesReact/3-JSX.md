@@ -1,4 +1,4 @@
-# JSX
+# 3 Le JSX
 
 [la doc détailler](https://fr.reactjs.org/docs/jsx-in-depth.html)
 
@@ -74,102 +74,22 @@ Rendu apès transformation
    }
 ``` 
 
+Aprés cette transformation nous allons remplire et/ou surprimer les Composants en statiques et faire aussi le style afin d'avoir le rendue visuelle.
 
-
-```js
-
-``` 
+exemple:
 
 ```js
+// import React from 'react';
+// 
+// import './style.scss';
+// 
+// function Header() {
+//   return (
+//     <header className="header">
+         <h1 className="header__title">Converter</h1>
+         <p className="header__base-amount">1 Euro</p>
+//     </header>
+//   );
+// }
+```
 
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 
-```js
-
-``` 

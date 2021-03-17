@@ -304,7 +304,9 @@ Soit dans notre fichier  `src/components/MonDossierApp/index.js` au final
 
 Dans ce model de React les parties ci-dessus sont déjà faite.
 
-Remplire et/ou surprimer les Composants en statiques et faire aussi le style afin d'avoir un rendue visuelle.
+# Etapes 3 Le JSX
+
+
 
 ```js
 ```

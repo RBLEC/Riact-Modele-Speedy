@@ -8,6 +8,7 @@
 
 **! Yarne est plus rapide**
 
+---
 
 ## Npm vs Yarn : les commandes
 

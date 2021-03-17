@@ -10,12 +10,10 @@
 
     git commit -m "Remplissage des compos en Statiques"
 
-    git commit -m "JSX des compos en Statiques pour ..."
+    git commit -m "JSX et SCSS des compos en Statiques pour le ..."
 
-    git commit -m "Styles des Composants pour ..."
+    git commit -m "Passage et validation des Props pour le..."
 
-    git commit -m "Passage et validation des Props pour ..."
-
-    git commit -m "Dynamisation pour ..."
+    git commit -m "Dynamisation pour le ..."
 
 
