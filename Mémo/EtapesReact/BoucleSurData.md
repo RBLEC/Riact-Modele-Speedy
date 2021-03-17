@@ -132,7 +132,7 @@ export default Currencies;
 
 ## Pour passer toute les informations d'un tableau a une const
 
-pour passer toute les donnée d'un trabeau 
+pour passer toute les donnée d'un trabeau
 
 ```js
 function Currencies({ currencies }) {
@@ -149,9 +149,10 @@ function Currencies({ currencies }) {
   ));
 ```
 
-### autre exemple de boucle
+---
+## Autre exemple de boucle
 
-#### 1 Le Parent
+### 1 Le Parent
 
 - Avant intégration des props
   
@@ -265,7 +266,7 @@ function Post() {
 export default Post;
 ```
 
-- Rendu final avec dynamisation 
+- Rendu final avec dynamisation
 
 ```js
 // import React from 'react';
@@ -296,21 +297,127 @@ export default Post;
 // export default Post;
 ```
 
+---
+
+### Exemple de boucle Parent => Enfant
+
+#### 1 Parent
+
+- Avant import des props
+
 ```js
+import Posts from 'src/components/Posts';
+import Footer from 'src/components/Footer';
+
+import './style.scss';
+
+function Blog() {
+  return (
+    <div className="blog">
+      <Header />
+      <Posts />
+      <Footer />
+    </div>
+```
+
+- Rendu avec intégration des props dans le parent
+
+```js
+// import Posts from 'src/components/Posts';
+// import Footer from 'src/components/Footer';
+// 
+  / importation de la data /
+   import categoriesData from 'src/data/categories';
+   import postsData from 'src/data/posts';
+// 
+// import './style.scss';
+// 
+// function Blog() {
+//   return (
+//     <div className="blog">
+      / passage des props /
+         <Header categories={categoriesData} />
+//       <Posts />
+//       <Footer />
+//     </div>
 
 ```
 
-```js
+#### 2 L'Enfant
 
-```
-
-```js
-
-```
+- Avant import des props chez l'enfant
 
 ```js
+import React from 'react';
 
+import './style.scss';
+
+function Header() {
+  return (
+    <header className="header">
+      <nav>
+        <ul>
+          <li><a href="/" className="header__link header__link--selected">Accueil</a></li>
+          <li><a href="/angular" className="header__link">Angular</a></li>
+          <li><a href="/react" className="header__link">React</a></li>
+          <li><a href="/oclock" className="header__link">O'clock</a></li>
+          <li><a href="/autres" className="header__link">Autres</a></li>
+        </ul>
+      </nav>
+    </header>
+  );
+}
+
+export default Header;
 ```
+
+- Après l'importation, l'intégration, l'utilisation et validation des props
+
+```js
+// import React from 'react';
+  / importation des props /
+   import PropTypes from 'prop-types';
+// 
+// import './style.scss';
+// 
+  / integration des props /
+   function Header({ categories }) {
+
+     / création de la boucle /
+     const menu = categories.map((category) => (
+       <li key={category.route}>
+         <a href={category.route} className="header__link">
+           {category.label}
+         </a>
+       </li>
+     ));
+// 
+//   return (
+//     <header className="header">
+//       <nav>
+//         <ul>
+      / utilisation de la boucle /
+             {menu}
+//         </ul>
+//       </nav>
+//     </header>
+//   );
+// }
+// 
+  / Validation des props /
+   Header.propTypes = {
+     categories: PropTypes.arrayOf(
+       PropTypes.shape({
+         route: PropTypes.string.isRequired,
+         label: PropTypes.string.isRequired,
+       }),
+     ).isRequired,
+   };
+// 
+// export default Header;
+```
+
+---
 
 ```js
 
