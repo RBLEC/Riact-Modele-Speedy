@@ -1,0 +1,35 @@
+@use 'src/styles/vars' as v;
+
+
+.currencies {
+  background-color:rgba(202, 168, 104, 0.578);
+  max-height: 30vh;
+  overflow: auto;
+  &__title {
+    padding:1.5rem;
+    font-weight: 700;
+  }
+  &__input {
+    width: 100%;
+    padding:2rem;
+    border: none;
+    color: yellowgreen;
+    font-size: 1em;
+    font-weight: 700;
+
+    &::placeholder {
+      color:red;
+    }
+  }
+}
+
+.currency {
+  padding: 0.5rem;
+  border-top: 1px solid blackt;
+  cursor: pointer;
+  transition: orangered;
+  &:hover {
+    background-color: blue;
+    transition: gray;
+  }
+}

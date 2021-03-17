@@ -297,29 +297,158 @@ export default Currencies;
 //     <div className="currencies">
 //       <p className="currencies__title">Currencies</p>
 //       <ul className="currencies__list">
-//         {currenciesList}
+    / intégration de notre const avec que des names. /
+         {currenciesList}
 //       </ul>
 //     </div>
 //   );
 // }
 // 
-// Currencies.propTypes = {
-//   // strict minimum de la validation de tableau
-//   // currencies: PropTypes.array.isRequired,
-//   // un peu mieux
-//   // currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
-//   // le top
-//   currencies: PropTypes.arrayOf(PropTypes.shape({
-//     name: PropTypes.string,
-//     rate: PropTypes.number,
-//   })).isRequired,
-// };
+    / Validation du props /
+   Currencies.propTypes = {
+     // strict minimum de la validation de tableau
+     // currencies: PropTypes.array.isRequired,
+     // un peu mieux
+     // currencies: PropTypes.arrayOf(PropTypes.object).isRequired,
+     // le top
+     currencies: PropTypes.arrayOf(PropTypes.shape({
+       name: PropTypes.string,
+       rate: PropTypes.number,
+     })).isRequired,
+   };
 // 
 // export default Currencies;
 ```
 
+---
+
+## Validation des props
+
+[La doc sur la validation des types avec PropTypes](https://fr.reactjs.org/docs/typechecking-with-proptypes.html#gatsby-focus-wrapper)
+
+pour valider des props il y a plusieur façon
+
+- Validation de props d'un Array Général le TOP
+
 ```js
+    maprops: PropTypes.arrayOf(PropTypes.object).isRequired,
 ```
+
+- Validation de props le minimum
+
+```js
+    maprops: PropTypes.array.isRequired,
+```
+
+- sinon on détailles
+
+```js
+     maprops: PropTypes.arrayOf(PropTypes.shape({
+       name: PropTypes.string,
+       rate: PropTypes.number,
+     })).isRequired,
+   };
+```
+
+# PropTypes
+
+- Voici un exemple qui détaille les différents validateurs fournis :
+
+```js
+import PropTypes from 'prop-types';
+
+MyComponent.propTypes = {
+  // Vous pouvez déclarer qu'une prop est d'un certain type JS. Par défaut,
+  // elles sont toutes optionnelles.
+  optionalArray: PropTypes.array,
+  optionalBool: PropTypes.bool,
+  optionalFunc: PropTypes.func,
+  optionalNumber: PropTypes.number,
+  optionalObject: PropTypes.object,
+  optionalString: PropTypes.string,
+  optionalSymbol: PropTypes.symbol,
+
+  // Tout ce qui peut apparaître dans le rendu : des nombres, des chaînes de
+  //  caractères, des éléments ou des tableaux (ou fragments) contenant ces types.
+  optionalNode: PropTypes.node,
+
+  // Un élément React.
+  optionalElement: PropTypes.element,
+
+  // Un type d’élément React (ex. MyComponent).
+  optionalElementType: PropTypes.elementType,
+
+  // Vous pouvez aussi déclarer qu'une prop est une instance d'une classe.
+  // On utilise pour ça l'opérateur JS instanceof.
+  optionalMessage: PropTypes.instanceOf(Message),
+
+  // Vous pouvez vous assurer que votre prop est limitée à certaines
+  // valeurs spécifiques en la traitant comme une enumération.
+  optionalEnum: PropTypes.oneOf(['News', 'Photos']),
+
+  // Cette prop peut être de n'importe lequel de ces trois types
+  optionalUnion: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number,
+    PropTypes.instanceOf(Message)
+  ]),
+
+  // Un tableau avec des valeurs d'un certain type
+  optionalArrayOf: PropTypes.arrayOf(PropTypes.number),
+
+  // Un objet avec des valeurs d'un certain type
+  optionalObjectOf: PropTypes.objectOf(PropTypes.number),
+
+  // Un objet avec une forme spécifique
+  optionalObjectWithShape: PropTypes.shape({
+    color: PropTypes.string,
+    fontSize: PropTypes.number
+  }),
+
+  // An object with warnings on extra properties
+  optionalObjectWithStrictShape: PropTypes.exact({
+    name: PropTypes.string,
+    quantity: PropTypes.number
+  }),
+
+  // Vous pouvez ajouter `isRequired` à la fin de n'importe lequel des validateurs
+  // ci-dessus pour vous assurer qu'un message d'avertissement s'affiche lorsque
+  // la prop n'est pas fournie.
+  requiredFunc: PropTypes.func.isRequired,
+
+  // Cette prop est requise et peut être de n'importe quel type
+  requiredAny: PropTypes.any.isRequired,
+
+  // Vous pouvez aussi spécifier un validateur personnalisé. Il devra renvoyer
+  // un objet Error si la validation échoue. N'utilisez pas de `console.warn`
+  // ou `throw`, car ça ne fonctionnera pas dans `oneOfType`.
+  customProp: function(props, propName, componentName) {
+    if (!/matchme/.test(props[propName])) {
+      return new Error(
+        'Invalid prop `' + propName + '` supplied to' +
+        ' `' + componentName + '`. Validation failed.'
+      );
+    }
+  },
+
+  // Vous pouvez aussi fournir un validateur personnalisé à `arrayOf` et `objectOf`.
+  // Il faudra renvoyer un objet Error si la validation échoue. Le validateur
+  // sera appelé pour chaque clé du tableau ou de l'objet. Les deux premiers
+  // arguments du validateur sont le tableau ou l'objet lui-même, et la clé
+  // de la valeur actuelle.
+  customArrayProp: PropTypes.arrayOf(
+    function(propValue, key, componentName, location, propFullName) {
+      if (!/matchme/.test(propValue[key])) {
+        return new Error(
+          'Invalid prop `' + propFullName + '` supplied to' +
+          ' `' + componentName + '`. Validation failed.'
+        );
+      }
+    }
+  )
+};
+```
+---
 
 ```js
 ```
@@ -331,15 +460,7 @@ export default Currencies;
 ```
 
 ```js
-```
 
-```js
-```
-
-```js
-```
-
-```js
 ```
 
 ```js

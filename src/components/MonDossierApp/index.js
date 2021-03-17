@@ -1,14 +1,16 @@
 // == Import npm
 import React from 'react';
-import MonCompoSecondaire from 'src/components/MonCompoSecondaire'
-import Header from 'src/components/Header'
-import Nav from 'src/components/Nav'
-import Main from 'src/components/Main'
-import Articles from 'src/components/Articles'
-import Aside from 'src/components/Aside'
-import Section from 'src/components/Section'
-import Footer from 'src/components/Footer'
-import List from 'src/components/List'
+import MonCompoSecondaire from 'src/components/MonCompoSecondaire';
+import Header from 'src/components/Header';
+import Nav from 'src/components/Nav';
+import Main from 'src/components/Main';
+import Articles from 'src/components/Articles';
+import Aside from 'src/components/Aside';
+import Section from 'src/components/Section';
+import Footer from 'src/components/Footer';
+import List from 'src/components/List';
+
+import Function from 'src/components/Function';
 
 // == Import
 import reactLogo from './react-logo.svg';
@@ -30,6 +32,8 @@ function MonDossierApp () {
       < Section />
       < Footer />
       < List />
+      <p> intégration des fonction</p>
+      < Function />
     </div>
   );
 }
