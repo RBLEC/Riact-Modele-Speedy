@@ -127,3 +127,22 @@ export default Currencies;
 // 
 // export default Currencies;
 ```
+
+## Pour passer toute les informations d'un tableau a une const
+
+pour passer toute les donnée d'un trabeau 
+
+```js
+function Currencies({ currencies }) {
+
+ / on va faire un tableau d'élément JSX pour les devises /
+  const currenciesList = currencies.map(({ name }) => (
+    <Currency key={name} name={name} />
+  ));
+
+  / possibiliter d'utiliser le spread operator /
+  const currenciesList = currencies.map((currency) => (
+    // React.createElement(Currency, {...currency})
+    <Currency key={currency.name} {...currency} />
+  ));
+```
