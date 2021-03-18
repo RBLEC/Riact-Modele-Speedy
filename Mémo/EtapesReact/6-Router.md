@@ -10,10 +10,8 @@ Tout d'abord, installez create-react-appet créez un nouveau projet avec.
     npx create-react-app demo-app   
 ```
 
+## Installation
 
-
-
-Installation
 Vous pouvez installer React Router à partir du registre public npm avec npmou yarn. Puisque nous construisons une application Web, nous utiliserons react-router-domdans ce guide.
 
 ```shell
@@ -92,7 +90,7 @@ function Users() {
 
 ## 2ème exemple: routage imbriqué
 
-Cet exemple montre comment fonctionne le routage imbriqué. La route /topicscharge le Topicscomposant, ce qui rend les autres <Route>conditionnellement sur la :idvaleur des chemins .
+Cet exemple montre comment fonctionne le routage imbriqué. La route /topicscharge le Topicscomposant, ce qui rend les autres <Route> conditionnellement sur la :idvaleur des chemins .
 
 ```js
 import React from "react";
@@ -196,7 +194,7 @@ Espérons que ces exemples vous donnent une idée de ce que signifie créer une 
 - Maintenant on vas intégrer React Router Dom au plus haut niveau soit dans notre point d'entrer dans `src/index.js`
 - Avec React-RouterDom on pourras avoir accès à l'objet history, il va falloir englober notre application avec le composant BrowserRouter as Router de react-router-dom.
 
-- Avant intégration du composant
+- Avant intégration JSX du composant
   
 ```js
 // == Import : npm
@@ -217,7 +215,7 @@ const target = document.getElementById('root');
 render(rootReactElement, target);
 ```
 
-- Rendu avec l'integration de react-router-dom et des balises
+- Rendu JSX avec l'integration de react-router-dom et des balises
 
 ```js
 // // == Import : npm
@@ -244,7 +242,7 @@ render(rootReactElement, target);
 // render(rootReactElement, target);
 ```
 
-- même rendu sans renomage du composant React-Router-Dom
+- même rendu JSX sans renomage du composant React-Router-Dom
 
 ```js
 //  == Import : npm
@@ -282,7 +280,7 @@ render(rootReactElement, target);
 
 Pour la réalisation de notre menu il faudra Import le compsant et le placer dans le fichier `src/components/header`.
 
-- Avant modification de l'enfant Header
+- Avant modification JSX de l'enfant Header
 
 ```js
 import React from 'react';
@@ -319,7 +317,7 @@ Header.propTypes = {
 export default Header;
 ```
 
-- Rendu avec import et placement
+- Rendu JSX avec import et placement
 
 ```js
 // import React from 'react';

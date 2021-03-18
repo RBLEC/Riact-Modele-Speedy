@@ -605,35 +605,13 @@ import categoriesData from 'src/data/categories';
 import postsData from 'src/data/posts';
 import './style.scss';
 function Blog() {
-  // pour les hooks, ils viennent remplacer des fonctionnalités que les classes
-  // permettaient. Mise en place d'un state, intéragir dans le cycle de vie du composant...
-  // Avantage on a pas à transformer notre composant en classe et on va pouvoir avoir des logiques
-  // de state, ou d'intéraction avec le lifecycle du composant, séparées du composant
-  // useState
-  // le hook de génération d'état - création de state
-  // même principe que pour le state de classe, à chaque fois que la donnée du state va changer
-  // React procède à un rendu
-  // en classe on a une propriété "state" qui est un objet, il vient tout l'état du composant
-  // state = {
-  //   name: '',
-  //   categories: [],
-  // }
-  // avec useState, on génère une seule propriété à la fois
-  // useState nous renvoie un tableau avec en index 0 la nouvelle valeur qui a été générée
-  // et en index 1 on aura le setter, équivalent à setState, pour cette entrée du state
-  // on passe en argument de useState, la valeur par défaut de ce nouveau state
-  //     state   setter    déclaration d'une nouvelle valeur de state
-  // const [test, setTest] = useState([]);
-  // on peut avoir plusieurs useState par composant
-  // const [coucou, setCoucou] = useState({});
+
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
-  // on va générer un composant Route pour chaque catégorie
-  // ce composant Route viendra prendre une liste de poste triée en fonction
-  // de la catégorie
+
   const routes = categoriesData.map((category) => {
     const postsList = getPostsByCategory(category.label, posts);
-    // composant Route qui sera intégré au nouveau tableau
+
     return (
       <Route
         path={category.route}
@@ -650,11 +628,6 @@ function Blog() {
       <Header categories={categoriesData} />
       <button type="button" onClick={() => setLoading(true)}>Load data</button>
       {loading && <div>Chargement des données</div>}
-      {/*
-        avec Switch on affichera qu'un seul composant Route à la fois
-        ici le composant Route qui a le composant NotFound correspondera au
-        default d'un switch/case
-      */}
       {!loading && (
         <Switch>
           {routes}
@@ -738,17 +711,182 @@ export default Blog;
 // export default Blog;
 ```
 
-```js
+### Intégration d'une mixin
 
+c'est une petite image en animation qui tourne sur elle même et import du fichier
+
+- Avant Modification du SCSS dans le compo enfant 
+
+```scss
+@use 'src/styles/vars';
+
+.posts {
+  width: 800px;
+  max-width: 100%;
+  margin: auto;
+  padding: vars.$gutter;
+  &__title {
+    font-family: vars.$title-font;
+    font-weight: vars.$title-font-weight;
+    color: vars.$primary-color;
+    font-size: 2em;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 0.5em;
+  }
+  .noData {
+    text-align: center;
+    margin: auto;
+    &__title {
+      text-transform: uppercase;
+      font-size: 1em;
+      margin: vars.$gutter;
+    }
+    &__button {
+      padding: vars.$gutter;
+      font-size: 1.2em;
+      background-color: vars.$primary-color;
+      border: 0;
+      color: vars.$light-color;
+    }
+  }
+  &__list {
+    display: flex;
+    flex-wrap: wrap;
+    .post {
+      width: 100%;
+      padding: vars.$gutter;
+      cursor: pointer;
+      @media screen and (min-width: 600px) {
+        width: 50%;
+      }
+      &__title {
+        font-family: vars.$title-font;
+        font-weight: vars.$title-font-weight;
+        color: vars.$dark-color;
+        text-transform: uppercase;
+        font-size: 1.3em;
+      }
+      &__categories {
+        padding: 0.7em 0;
+      }
+      &__category {
+        background-color: vars.$primary-color;
+        color: vars.$light-color;
+        padding: 0.5em;
+        text-transform: uppercase;
+        margin-right: 0.5em;
+        font-size: 0.8em;
+      }
+      &__excerpt {
+        font-weight: 300;
+        margin-top: 0.5em;
+        color: vars.$post-text-color;
+        text-align: justify;
+      }
+      &:hover {
+        background-color: vars.$post-hover-color;
+      }
+    }
+  }
+}
 ```
 
-```js
+- Rendu avec Modifiaction du SCSS
 
+```scss
+// @use 'src/styles/vars';
+// @use 'src/styles/mixins';
+// 
+// .posts {
+//   width: 800px;
+//   max-width: 100%;
+//   margin: auto;
+//   padding: vars.$gutter;
+//   &__title {
+//     font-family: vars.$title-font;
+//     font-weight: vars.$title-font-weight;
+//     color: vars.$primary-color;
+//     font-size: 2em;
+//     text-align: center;
+//     text-transform: uppercase;
+//     margin-bottom: 0.5em;
+//   }
+//   .noData {
+//     text-align: center;
+//     margin: auto;
+//     &__title {
+//       text-transform: uppercase;
+//       font-size: 1em;
+//       margin: vars.$gutter;
+//     }
+//     &__button {
+
+       /***********************************
+       * Ajout d'une ombre via les mixins *
+       ***********************************/
+       @include mixins.shadow;
+
+//       padding: vars.$gutter;
+//       font-size: 1.2em;
+//       background-color: vars.$primary-color;
+//       border: 0;
+//       color: vars.$light-color;
+//     }
+//   }
+//   &__list {
+//     display: flex;
+//     flex-wrap: wrap;
+//     .post {
+//       width: 100%;
+//       padding: vars.$gutter;
+//       cursor: pointer;
+//       @media screen and (min-width: 600px) {
+//         width: 50%;
+//       }
+//       &__title {
+//         font-family: vars.$title-font;
+//         font-weight: vars.$title-font-weight;
+//         color: vars.$dark-color;
+//         text-transform: uppercase;
+//         font-size: 1.3em;
+//       }
+//       &__categories {
+//         padding: 0.7em 0;
+//       }
+//       &__category {
+//         background-color: vars.$primary-color;
+//         color: vars.$light-color;
+//         padding: 0.5em;
+//         text-transform: uppercase;
+//         margin-right: 0.5em;
+//         font-size: 0.8em;
+//       }
+//       &__excerpt {
+//         font-weight: 300;
+//         margin-top: 0.5em;
+//         color: vars.$post-text-color;
+//         text-align: justify;
+//       }
+//       &:hover {
+//         background-color: vars.$post-hover-color;
+//       }
+//     }
+//   }
+// }
 ```
 
-```js
+- Création du fichier enfant scss soit `_mixins.scss`
 
+```scss
+@mixin shadow {
+  box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.49);
+  -webkit-box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.49);
+  -moz-box-shadow: 2px 2px 11px 0px rgba(0,0,0,0.49);
+}
 ```
+
+---
 
 ```js
 
