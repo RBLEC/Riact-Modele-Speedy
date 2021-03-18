@@ -45,3 +45,41 @@ class Converter extends React.Component {
 
 export default Converter;
 ```
+---
+
+# Les Hooks
+
+- Pour les hooks, ils viennent remplacer des fonctionnalités que les classes permettaient. Mise en place d'un state, intéragir dans le cycle de vie du composant...
+- Avantage on a pas à transformer notre composant en classe et on va pouvoir avoir des logiques
+de state, ou d'intéraction avec le lifecycle du composant, séparées du composant
+
+## useState
+
+### Le hook de génération d'état
+
+- création de state même principe que pour le state de classe, à chaque fois que la donnée du state va changer.
+
+- React procède à un rendu en classe on a une propriété "state" qui est un objet, il vient tout l'état du composant
+
+```js
+state = {
+  name: '',
+  categories: [],
+}
+```
+
+### Avec useState, on génère une seule propriété à la fois
+
+- useState nous renvoie un tableau avec en index 0 la nouvelle valeur qui a été générée
+et en index 1 on aura le setter, équivalent à setState, pour cette entrée du state
+on passe en argument de useState, la valeur par défaut de ce nouveau state
+
+    **state   setter**  = déclaration d'une nouvelle valeur de state
+
+```js
+const [test, setTest] = useState([]);
+
+ / on peut avoir plusieurs useState par composant /
+
+const [coucou, setCoucou] = useState({});
+```
