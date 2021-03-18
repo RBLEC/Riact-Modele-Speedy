@@ -736,6 +736,8 @@ export const getPostsByCategory = (category, posts) => {
 };
 ```
 
+---
+
 ```js
 
 ```
